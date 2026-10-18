@@ -1,0 +1,158 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>
+        YourPlanner Tests
+     </title>
+     <link rel="stylesheet" href="styles/style.css">
+    </head>
+    <body>
+        <header>
+            <h1> Your Planner Tests </h1>
+            <p>
+                Check Whether your main features are in perfect Condition.
+            </p>
+            <a href="index.html">Back to Your Planner</a>
+
+        </header>
+
+        <main>
+            <section>
+                <h2>
+                    Test Results
+                </h2>
+                <p id="test-summary">Tests in progress....</p>
+                <ul id="test-results"></ul>
+            </section>
+
+        </main>
+
+<script type="module">
+        import {
+            checkTitle,
+            checkDuration,
+            checkDay,
+            checkTime,
+            validatePlan,
+            checkSearch
+        }from "./scripts/validator.js";
+
+        import{ searchACtivities } from "./scripts/search,js";
+
+        import{
+            savePlan,
+            loadPlan,
+            clearPlan
+        }from "./scripts/storage.js";
+
+        const results = document.getElementById("test-results");
+        const summary = document.getElementById("test-summary");
+
+        let passed=0;
+        let failed= 0;
+
+        function test(name, condition) {
+            const item = document.createElement("li");
+
+        if (condition) {
+            item.textContent = "PASS: " + name;
+            passed++;
+        } else{
+            item.textContent ="FAIL:" + name;
+            failed++;
+        }
+
+        results.appendChild(item);
+
+    }
+
+    test("A normal title is accepted", checkTitle("StudyGroup"));
+    test("An empty title is rejected", !checkTitle("         "));
+
+
+    test("Monday is accpeted", checkDay("Monday"));
+    test("An invalid day is rejected", !checkDay("FunDay"));
+
+    test("A valid time is accepted", checkTime("14:30"));
+    test("An invalid time is rejected", !checkTime("25:90"));
+
+    test("a search item is accepted", checkSearch("coding"));
+    test("An empty search is rejected ", ! checkSearch ("   "));
+
+
+    const validPlan = {
+        activityId:"1",
+        day: "Monday",
+        time: "14:00"
+    };
+
+    test(
+        "A valid weekly plan passes validation",
+        Object.keys(validatePlan(validPlan)).lenght === 0
+    );
+
+    const sampleActivities= [
+        {
+            id: 1,
+            title: "Coding Practice",
+            category: "Academic",
+            description: "Practice programming."
+        },
+        {
+            id: 2,
+            title:  "Coding Practice,
+            category: "Academic",
+            description: "Practice programming."
+        },
+        {
+            id: 2,
+            title: "Basketball",
+            category: "Sports",
+            description:"play with my friends."
+        }
+    ];
+
+    test(
+        "Search find an activity by title",
+        searchActivities(SampleActvities, "coding" , "all").length === 1
+    );
+
+    test(
+        "Category filtering works",
+        searchActivities(sampleActivities, "","Sports).length === 1
+    );
+
+    const samplePlan = [
+
+    {
+        activityId: 1,
+        title:"Study Group",
+        day:"Monday",
+        time: "14:00"
+    }
+    ];
+
+    const saved = savedPlan(samplePlan);
+    const loadedPlan();
+
+
+    test (
+        "Aweekly plan can be saved and loaded",
+        saved &&
+        loaded.length === 1 &&
+        loaded[0].tile === "Study Group"
+    );
+
+    clearPlan();
+
+    summary.textContent =
+         passed + "test passed, " + failed + " tests failed.";
+          summary.style.fontWeight ="bold";
+
+
+</script>
+
+    </body>
+</html>

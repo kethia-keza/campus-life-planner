@@ -1,0 +1,111 @@
+[
+    {
+        "id":1,
+        "title":"Study Group",
+        "category":"Academic",
+        "description":"Study with other students and helpe ach other understand class topics.",
+        "day":"Monday",
+        "time:"16:00",
+        "duration":60
+    },
+    {
+
+    "id": 2,
+    "title": "Coding Practice",
+    "category":"Academic",
+    "description":"Practice coding and learn new programming skills with friends.",
+    "day": "15:00",
+    "duration": 90
+
+    },
+    {
+    
+    "id":3,
+    "title": "Entrepreneurship Meetup",
+    "category": "Carrer",
+    "description": "Share business ideas and learn from other aspiring entrepreneurs.",
+    "day": "Wednesday",
+    "time": "14:00",
+    "duration": 60
+    },
+    {
+    
+    "id": 4,
+    "title": "Campus Basketball",
+    "category": "Sports",
+    "description": "Play basketball, stay active, and meet other students.",
+    "day":"Thursday",
+    "time": "17:00",
+    "duration": 60
+    },
+    {
+  
+    "id": 5,
+    "title": "Movie and Games Night",
+    "category": "Social",
+    "description": "Relax play games, and spend time with your campus friends.",
+    "day": "Friday",
+    "time": "18:00",
+    "duration": 120
+
+    },
+    {
+
+    "id": 6,
+    "title": "Morning Walk",
+    "category": "Wellness",
+    "description": "Start your day with a refreshing walk around Campus.",
+    "day": "Saturday",
+    "time": "07:00",
+    "duration": 30
+
+    },
+    {
+
+    "id":7,
+    "title": "Community Clean-Up",
+    "description": "Help keep your campus and make a positive difference.",
+    "day": "Saturday" ,
+    "time": "09:00"
+    "duration": 90
+    },
+    {
+
+
+    "id": 8,
+    "title":"Public Speaking Club",
+    "category": "Career" ,
+    "description": "Practice speaking confidelity and sharing your ideas with others.",
+    "day": "Wednesday",
+    "time": "16:00",
+    "duration": 60
+    },
+    {
+
+    "id": 9,
+    "title": "Board Games",
+    "category": "Social",
+    "description": "Enjoy friendly competition with chess , cards, and other games.",
+    "day": "Sunday",
+    "time": "15:00",
+    "duration": 60
+    },
+    {
+    "id": 10,
+    "title": "Dance and Fitness",
+    "category": "Wellness",
+    "description": "Move your body, enjoy music, and have fun with other students.",
+    "day": "Friday",
+    "time": "16:00",
+    "duration": 60
+    },
+    {
+    "id": 11,
+    "title": "Grow in Your Faith",
+    "category": "Faith",
+    "description": "Join other students for prayer, worship, Bible Study, and fellowshipas we grow closer to God and encourage one another in faith.",
+    "day": "Sunday",
+    "time: "16:00",
+    "duration": 60
+    }
+]

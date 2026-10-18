@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF 8">
+        <meta charset="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>YourPlanner</title>
+
+        <link rel="stylesheet" href="styles/style.css">
+        <script type="module" src="scripts/main.js"></script>
+    </head>
+
+
+    <body>
+
+        <header>
+            <h1>YourPlanner</h1>
+
+            <nav>
+                <a href="#home">Home</a>
+                <a href="#activities">Activities</a>
+                <a href="#my-week">My Week</a>
+                <a href="#about">About</a>
+
+            </nav>
+        </header>
+
+        <main>
+
+            <section id="home">
+
+                <h2>Your Campus. Your own interests . Own your Time</h2>
+                <p>
+                    Know your  campus activities , Pick the ones you like, Plan your week according to  your preferences.
+
+                </p>
+
+                <a href="#activities">Explore Activities</a>
+            </section>
+
+            <section id="activities">
+                <h2>Explore Campus Activities</h2>
+
+                <p>Find activities you would like to join.</p>
+
+                <input type="text" id="activity-research" placeholder="Now ,Search for an ctivity">
+
+                <select id="category-filter">
+                    <option value="all">All activities</option>
+                    <option value="Academic">Academic</option>
+                    <option value="Career">Career</option>
+                    <option value="Sports">Sports</option>
+                    <option value="Social">Social</option>
+                    <option value="Wellness">Wellness</option>
+                    <option value="Volunteering">Volunteering</option>
+                    <option valu="Faith">Faith</option>
+                </select>
+
+                <div id="Activity-list">
+                    <p>Campus activies will be found here.!!Coucou</p>
+                </div>
+                <p id="activity-message"></p>
+            </section>
+
+            <section id="my-week">
+                <h2>Plan Your Week</h2>
+
+                <p>Chose any/activities and decide your own time to do it.</p>
+
+                <form id="plan-form">
+
+                    <label for="selected-activity">Activity</label>
+                    <select id="selected-activity" required>
+                        <option value="">Choose an activity</option>
+                    </select>
+
+                    <label for="plan-day">Day</label>
+                    <select id="plan-day" required>
+                     <option value="">Choose a day</option>
+                     <option value="Monday">Monday</option>
+                     <option value="Tuesday">Tuesday</option>
+                     <option value="Wednesday">Wednesday</option>
+                     <option value="Thursday">Thursday</option>
+                     <option value="Friday">Friday</option>
+                     <option value="Saturday">Saturday</option>
+                     <option value="Sunday">Sunday</option>
+                    </select>
+
+                    <label for="plan-time">Time</label>
+                    <input type="time" id="plan-time" required>
+
+                    <button type="submit">Add to my week.</button>
+
+                    <p id="plan-message"></p>
+                </form>
+
+            <h3>My Weekly Schedule</h3>
+
+            <div id="">
+                <p>Your selected activities will appear here and their time. </p>
+            </div>
+            </section>
+
+            <section id="about">
+                <h2>About YourPlanner</h2>
+
+                <p>
+                    YourPlanner helps students to discover  their campus activities,
+                    explore their interests and  talents  but also organize their week.
+                    Students choose what they want to do and create a plan that fits their life.
+                </p>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy;<2026 You planner/p>
+        </footer>
+    </body>
+</html>
