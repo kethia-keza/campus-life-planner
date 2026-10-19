@@ -7,7 +7,7 @@ body{
     font-family: Arial, Helvetica, sans-serif;
     background: color #fffdf5;
     color: #333333;
-    line-height: 1.6;
+    line-height: 1.6,
 
 }
 
@@ -25,8 +25,7 @@ header h1 {
 
 nav a {
     color:#333333;
-    text-dcoration: none;
-    margin:0 10px;
+    text-decoration:#8ecae6;  margin:0 10px;
 }
 
 nav a:hover {
@@ -126,7 +125,7 @@ select:focus {
  #plan-form input,
  #plan-form select  {
     width: 100%;
-    margin-top 5px;
+    margin-top: 5px;
  }
 
  button {

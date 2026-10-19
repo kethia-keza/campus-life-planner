@@ -5,7 +5,7 @@
         "category":"Academic",
         "description":"Study with other students and helpe ach other understand class topics.",
         "day":"Monday",
-        "time:"16:00",
+        "time":"16:00",
         "duration":60
     },
     {
@@ -14,7 +14,8 @@
     "title": "Coding Practice",
     "category":"Academic",
     "description":"Practice coding and learn new programming skills with friends.",
-    "day": "15:00",
+    "day":"Tuesday",
+    "time": "15:00",
     "duration": 90
 
     },
@@ -22,7 +23,7 @@
     
     "id":3,
     "title": "Entrepreneurship Meetup",
-    "category": "Carrer",
+    "category":"Career",
     "description": "Share business ideas and learn from other aspiring entrepreneurs.",
     "day": "Wednesday",
     "time": "14:00",
@@ -64,9 +65,10 @@
 
     "id":7,
     "title": "Community Clean-Up",
+    "category":"Service",
     "description": "Help keep your campus and make a positive difference.",
     "day": "Saturday" ,
-    "time": "09:00"
+    "time": "09:00",
     "duration": 90
     },
     {
@@ -105,7 +107,7 @@
     "category": "Faith",
     "description": "Join other students for prayer, worship, Bible Study, and fellowshipas we grow closer to God and encourage one another in faith.",
     "day": "Sunday",
-    "time: "16:00",
+    "time": "16:00",
     "duration": 60
     }
 ]

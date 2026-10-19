@@ -9,12 +9,12 @@ export function showActivities(activities) {
     
     }
 
-    activities.forEach(function (actvity) {
+    activities.forEach(funtion(activity) {
         const card = document.createElement("article");
         card.className = "activity-card";
 
         const title= document.createElement("h3");
-        title.textContent = activityList.title;
+        title.textContent = activity.title;
 
         const category = document.createElement("p");
         category.textContent ="Category: " + activity.category;
@@ -35,7 +35,7 @@ export function showActivities(activities) {
 
 
         card.appendChild(title);
-        card.appendChild(Category);
+        card.appendChild(category);
         card.appendChild(description);
         card.appendChild(time);
         card.appendChild(button);
@@ -51,7 +51,7 @@ export function showMyWeek(activities) {
     const weeklySchedule =document.getElementById("weekly-schedule");
      
 
-    weeklySchedule.InnerHTML="";
+    weeklySchedule.innerHTML="";
 
     if(activities.length === 0) {
         weeklySchedule.textContent =
@@ -86,19 +86,15 @@ export function showMyWeek(activities) {
     });
 }
 
-export function fillActivity(activities) {
-    const dropdwon = document.getElementById("selected-activity");
-
-
-    dropdwon.innerHTML = '<option value="">Choose an activity</option>';
+export function fillActivityOptions(activities) {
+    const select = document.getElementById("selected-activity");
+    select.innerHTML = '<option value="">Choose an activity</option>';
 
     activities.forEach(function (activity) {
-        const optiob = document.createElement("option");
-        Option.value = activity.id;
-        Option.textContent = activity.title;
-
-
-        dropdwon.appendChild(option);
+        const option = document.createElement("option");
+        option.value = activity.id;
+        option.textContent = activity.title;
+        select.appendChild(option);
     });
-    
+
 }

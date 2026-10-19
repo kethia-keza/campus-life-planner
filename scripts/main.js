@@ -1,4 +1,4 @@
-import { validatePlan } from ."/validator.js";
+import { validatePlan } from "./validator.js";
 import {
     getMyWeek,
     addToMyWeek,
@@ -6,13 +6,13 @@ import {
 } from "./state.js";
 import { searchActivities } from "./search.js";
 import {
-    showActivities;
+    showActivities,
     showMyWeek,
     fillActivityOptions
 } from "./ui.js";
 
 
-const searchInput = documeny=getElementById("activity-search");
+const searchInput = document.getElementById("activity-search");
 const categoryFilter = document.getElementById("category-filter");
 const activityList = document.getElementById("activity-list");
 
@@ -37,6 +37,10 @@ function updateActivities () {
 
 }
 
+function updateMyWeek(){
+    showMyWeek(getMyWeek());
+}
+
 async function startPlanner() {
     try {
         const response = await fetch("./seed.json");
@@ -47,7 +51,7 @@ async function startPlanner() {
 
         }
 
-        activities = wait response.json();
+         activities = await response.json();
 
         fillActivityOptions(activities);
         updateActivities();
@@ -88,14 +92,14 @@ activityList.addEventListener("click", function (event) {
         activityId: activity.id,
         title: activity.title,
         day: activity.day,
-        time activity.time,
+        time: activity.time,
 
     };
 
     if (addToMyWeek(planItem)) {
         updateMyWeek();
         planMessage.textContent =
-                    activity.title + "was added to your week!";
+                    activity.title + " was added to your week!";
 
     }else {
         planMessage.textContent =
@@ -108,12 +112,12 @@ planForm.addEventListener("submit", function (event) {
     event.preventDefault();
 
     const planDetails = {
-        activityId: String(selectedActivity.value)'
-        day: planDay.valie,
+        activityId: String(selectedActivity.value),
+        day: planDay.value,
         time: planTime.value
     };
 
-    const errors =validatePLan(planDetails);
+    const errors = validatePlan (planDetails);
 
     const activity = activities.find(function (item){
         return item.id === Number(selectedActivity.value);
@@ -130,7 +134,7 @@ planForm.addEventListener("submit", function (event) {
         return;
     }
 
-    const plaItem = {
+    const planItem= {
         activityId: activity.id,
         title:activity.title,
         day:planDay.value,
@@ -142,7 +146,7 @@ planForm.addEventListener("submit", function (event) {
         planMessage.textContent=
                                 activity.tile + "was added to your week.";
 
-                        planForm.requestFullscreen();
+                                planDay.planForm.reset();
                                  
                                      
     }else {
@@ -162,7 +166,7 @@ document.getElementById("weekly-schedule").addEventListener(
             return;
         }
 
-        const planIndex = Number(event.target,this.dataset.planIndex);
+        const planIndex = Number(event.target.dataset.planIndex);
 
         if(removeFromMyWeek(planIndex)) {
             updateMyWeek();

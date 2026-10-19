@@ -48,5 +48,5 @@ export function validPlan(plan) {
 
 export function checkSearch(searchText) {
     return searchText.trim() !=="";
-    
+
 }
