@@ -11,6 +11,8 @@
 
  -Browse campus Activities.
  -Search activities by title or description.
+ - Browse campus activities.
+- Search activities by title or description.
 - Filter activities by category.
 - Add activities to a weekly plan.
 - Remove activities from the plan.
@@ -120,3 +122,6 @@ GitHub Pages Website: [Add your deployed website URL]
 ## 12. Conclusion
 
 YourPlanner aims to help students discover campus opportunities and organize their time. Future development can expand its planning tools, accessibility, and data management features.
+
+
+Video link 
