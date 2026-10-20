@@ -160,3 +160,6 @@ https://kethia-keza.github.io/campus-life-planner/
 ## 12. Conclusion
 
 YourPlanner provides students with a simple way to explore campus activities and organize their weekly schedules. Its modular JavaScript structure separates application state, storage, validation, searching, and user-interface rendering, making the project easier to maintain and extend.
+
+Video link:
+https://youtu.be/smsoYYH3ypQ
