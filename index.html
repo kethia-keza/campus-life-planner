@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF 8">
-        <meta charset="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <meta name="description" content="YourPlanner assists students to discover their campus activities and organize their week.">
 
-        <title>YourPlanner</title>
+        <title>YourPlanner | Campus life Planner</title>
 
         <link rel="stylesheet" href="styles/style.css">
         <script type="module" src="scripts/main.js"></script>
@@ -13,7 +14,9 @@
 
     <body>
 
-        <header>
+        <a class="skip-link" href="#main-content">Skip to main content</a>
+
+        <header class="site-header">
             <h1>YourPlanner</h1>
 
             <nav>
@@ -25,25 +28,91 @@
             </nav>
         </header>
 
-        <main>
+        <main id="main-content">
 
-            <section id="home">
+<section id="about">
+    <h2>
+        About Your Planner
+    </h2>
+    <p>
+        Your Planner helps students discover their Campus activities, explore their interests and talents, and organize their week. Students choose what tehy want yo do and create a plan that fits their schedules.
+    </p>
 
-                <h2>Your Campus. Your own interests . Own your Time</h2>
-                <p>
-                    Know your  campus activities , Pick the ones you like, Plan your week according to  your preferences.
+    <h3>
+        Contact
+    </h3>
+    <p>
+        Email: <a href:mailto:k.keza5@alustudent.com">k.keza5@alustudent.com </a><br>
+        Github: <a href="https://github.com/kethia-keza">Github.com/kethia-keza</a>
+    </p>
+</section>
 
-                </p>
+            <section id="dashboard">
+                <h2>My Campus Dashboard</h2>
 
-                <a href="#activities">Explore Activities</a>
+                <div class="dashboard-stats">
+                    <article>
+                        <h3>Total Activities</h3>
+                        <p id="stat-total">0</p>
+                    </article>
+                    <article>
+                        <h3>Total Duration</h3>
+                        <p id="stat-duration">0 minutes</p>
+                    </article>
+
+                    <article>
+                    <h3>Top Category</h3>
+                    <p id="stat-category">None yet</p>
+                    </article>
+                </div>
+
+                <h3>Weekly Activity Trend</h3>
+                <div id="trend-chart" aria-label="Activity trend for the last seven days">
+                    No activity data yet.
+                </div>
             </section>
+
+
+            <section id="weekly-target">
+                <h2>Weekly Duration Target</h2>
+
+                <form id="target-form">
+                    <label for="duration-cap">Maximun planned minutes per week</label>
+                    <input 
+                          type="number"
+                          id="duration-cap"
+                          min="30"
+                          step="30"
+                          value="600"
+                          required
+                    >
+
+                    <button type="submit">Set weekly target</button>
+
+                </form>
+
+                <p id="target-message" aria-live="polite">
+                    Your Weekly targtet is 600 minutes.
+                </p>
+            </section>
+
+            
 
             <section id="activities">
                 <h2>Explore Campus Activities</h2>
 
                 <p>Find activities you would like to join.</p>
 
-                <input type="text" id="activity-search" placeholder="Now ,Search for an activity">
+                 <label for="activity-search">Search activities </label>
+                 <input 
+                       type="search"
+                       id="activity-search"
+                       placeholder="Search or enter a regular expression"
+                       aria-describedby="search-error"
+                       >
+
+                       <p id="search-error" role="alert"></p>
+
 
                 <select id="category-filter">
                     <option value="all">All activities</option>
@@ -53,12 +122,23 @@
                     <option value="Social">Social</option>
                     <option value="Wellness">Wellness</option>
                     <option value="Volunteering">Volunteering</option>
-                    <option valu="Faith">Faith</option>
+                    <option value="Faith">Faith</option>
                 </select>
 
-                <div id="activity-list">
-                    <p>Campus activies will be found here.!!Coucou</p>
-                </div>
+                <label for="sort-by">Sort activities</label>
+                <select id="sort-by">
+                    <option value="name">Name (A-Z)</option>
+                    <option value="category">Category</option>
+                    <option value="duration">Duration</option>
+                </select>
+
+                <label>
+                    <input type="checkbox" id="case-sensitive">
+                    Case-sensitive search
+                </label>
+
+                <div id="activity-list"></div>
+
                 <p id="activity-message"></p>
             </section>
 
@@ -68,6 +148,8 @@
                 <p>Chose any/activities and decide your own time to do it.</p>
 
                 <form id="plan-form">
+
+                    <input type="hidden" id="editing-id" value="">
 
                     <label for="selected-activity">Activity</label>
                     <select id="selected-activity" required>
@@ -90,9 +172,30 @@
                     <label for="plan-time">Time</label>
                     <input type="time" id="plan-time" required>
 
-                    <button type="submit">Add to my week.</button>
+                    <label for="plan-duration">Duration (minutes) </label>
+                    <input 
+                          type="number"
+                          id="plan-duration"
+                          min="5"
+                          max="480"
+                          step="5"
+                          required
+                    >
+                    <label for="plan-tag">Category</label>
+                    <select id="plan-tag" required>
+                        <option value="">Choose a category</option>
+                        <option value="Academic">Academic</option>
+                        <option value="Career">Career</option>
+                        <option value="Sports">Sports</option>
+                        <option value="Social">Social</option>
+                        <option value="Wellness">Wellness</option>
+                        <option value="Volunteering">Volunteering</option>
+                    </select>
 
-                    <p id="plan-message"></p>
+                    <button type="submit" id="save-plan-button">Add to my week</button>
+                    <button type="button" id="cancel-edit" hidden>Cancel editing </button>
+
+                    <p id="plan-message" aria-live="polite"></p>
                 </form>
 
             <h3>My Weekly Schedule</h3>
@@ -100,16 +203,41 @@
             <div id="weekly-schedule">
                 <p>Your selected activities will appear here and their time. </p>
             </div>
+        </section>
+
+            <section id="data-tools">
+                <h2>Import and Export Your Plan</h2>
+
+                <button type="button" id="export-json">Export JSON</button>
+
+                <label for="import-json">Import a JSON file</label>
+                <input type="file" id="import-json" accept=".json,application/json">
+
+                <p id="data-message" aria-live="polite"></p>
             </section>
 
-            <section id="about">
-                <h2>About YourPlanner</h2>
+            <section id="duration-converter">
+                <h2>Minutes and Hours Converter </h2>
 
-                <p>
-                    YourPlanner helps students to discover  their campus activities,
-                    explore their interests and  talents  but also organize their week.
-                    Students choose what they want to do and create a plan that fits their life.
-                </p>
+                <label for="convert-value">Enter a duration"</label>
+                    <input
+                          type="number"
+                          id="convert-value"
+                          min="0"
+                          step="any"
+                          value="60"
+
+                    >
+
+                    <label for="convert-direction">Conversion</label>
+                    <select id="convert-direction">
+                        <option value="to-hours">Minutes to hours </option>
+                        <option value="to-minutes">Hours to Minutes</option>
+                    </select>
+
+                    <p id="conversion-result" aria-live ="polite">
+                        60 minutes=1
+                    </p>
             </section>
         </main>
 

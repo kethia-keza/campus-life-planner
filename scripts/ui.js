@@ -1,15 +1,17 @@
 export function showActivities(activities) {
     const activityList = document.getElementById("activity-list");
-
+    const activityMessage = document.getElementById("activity-message");
     activityList.innerHTML = "";
 
     if (activities.length === 0) {
-        activityList.textContent = "No activities found.Try another search.";
+        activityMessage.textContent = "No activities found. Try another search.";
         return;
     
     }
 
-    activities.forEach(funtion(activity) {
+    activityMessage.textContent = activities.length + " activities found.";
+
+    activities.forEach(function (activity) {
         const card = document.createElement("article");
         card.className = "activity-card";
 
@@ -26,12 +28,12 @@ export function showActivities(activities) {
 
         const time= document.createElement("p");
         time.textContent =
-             activity.day + " at " + activity.time;
+             activity.day + " at " + activity.time + " (" + activity.duration + "min)";
 
         const button =document.createElement("button");
-        button.textContent = "Add to My Week";
+        button.textContent = "Plan this Activity";
         button.type = "button";
-        button.dataset.activityId= activity.id;
+        button.dataset.activityId = activity.id;
 
 
         card.appendChild(title);
@@ -48,10 +50,10 @@ export function showActivities(activities) {
 }
 
 export function showMyWeek(activities) {
-    const weeklySchedule =document.getElementById("weekly-schedule");
+    const weeklySchedule = document.getElementById("weekly-schedule");
      
 
-    weeklySchedule.innerHTML="";
+    weeklySchedule.innerHTML= "";
 
     if(activities.length === 0) {
         weeklySchedule.textContent =
@@ -76,9 +78,18 @@ export function showMyWeek(activities) {
         button.textContent = "Remove";
         button.type = "button";
         button.dataset.planIndex = index;
+        button.setAttribute("aria-label", "Remove " + activity.title);
+
+
+        const editButton = document.createElement("button");
+        editButton.textContent = "Edit";
+        editButton.type = "button";
+        editButton.dataset.editIndex = index;
+        editButton.setAttribute("aria-label", "Edit " + activity.title);
 
         item.appendChild(title);
         item.appendChild(details);
+        item.appendChild(editButton);
         item.appendChild(button);
 
 
@@ -88,13 +99,16 @@ export function showMyWeek(activities) {
 
 export function fillActivityOptions(activities) {
     const select = document.getElementById("selected-activity");
+    const previous = select.value;
+
     select.innerHTML = '<option value="">Choose an activity</option>';
 
     activities.forEach(function (activity) {
         const option = document.createElement("option");
         option.value = activity.id;
-        option.textContent = activity.title;
+        option.textContent = activity.title + " (" + activity.category + ")";
         select.appendChild(option);
     });
-
+ 
+    select.value = previous;
 }

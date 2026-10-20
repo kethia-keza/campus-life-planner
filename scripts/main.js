@@ -1,182 +1,242 @@
-import { validatePlan } from "./validator.js";
 import {
     getMyWeek,
     addToMyWeek,
-    removeFromMyWeek
+    removeFromMyWeek,
+    updateMyWeek
 } from "./state.js";
-import { searchActivities } from "./search.js";
+
 import {
     showActivities,
     showMyWeek,
     fillActivityOptions
-} from "./ui.js";
+}  from "./ui.js";
 
+import { searchActivities } from "./search.js";
 
-const searchInput = document.getElementById("activity-search");
-const categoryFilter = document.getElementById("category-filter");
-const activityList = document.getElementById("activity-list");
+import {
+    checkDay,
+    checkTime,
+    checkDuration,
+    validatePlan
+} from "./validator.js";
 
+let allActivities = [];
 
-const planForm = document.getElementById("plan-form");
-const selectedActivity = document.getElementById("selected-activity");
-const  planDay = document.getElementById("plan-day");
-const planTime = document.getElementById("plan-time");
-const planMessage = document.getElementById("plan-message");
-
-
-let activities = [];
-
-function updateActivities () {
-    const results =searchActivities(
-    activities,
-    searchInput.value,
-    categoryFilter.value
-    );
-
-    showActivities(results);
-
-}
-
-function updateMyWeek(){
-    showMyWeek(getMyWeek());
-}
-
-async function startPlanner() {
+async function loadActivities() {
     try {
         const response = await fetch("./seed.json");
 
-
-        if(!response.ok){
-            throw new Error("Could not load activities. ");
-
+        if(!response.ok) {
+            throw new Error("Could not load seed.json");
         }
 
-         activities = await response.json();
+        allActivities = await response.json();
 
-        fillActivityOptions(activities);
-        updateActivities();
-        updateMyWeek();
+        showActivities(allActivities);
+        fillActivityOptions(allActivities);
+        showMyWeek(getMyWeek());
 
+    } catch (error) {
+        console.error("Error loading activities:", error);
 
-    }catch (error) {
-        activityList.textContent =
-        "Actvities could not load . PLease run the project using VS code Live Server.";
-        console.log(error);
-
+        document.getElementById("activity-message").textContent =
+            "Could not load activities. Check seed.json and try again.";
     }
 }
 
-searchInput.addEventListener("input",updateActivities);
+function refreshWeek() {
+    showMyWeek(getMyWeek());
+}
 
+document.getElementById("weekly-schedule").addEventListener("click", function (event) {
+    const button = event.target.closest("button[data-edit-index]");
 
-categoryFilter.addEventListener("change", updateActivities);
-
-
-activityList.addEventListener("click", function (event) {
-    if (event.target.tagName !== "BUTTON") {
+    if(!button) {
         return;
     }
 
-    const activityId = Number(event.target.dataset.activityId);
-
-    const activity = activities.find(function (item) {
-        return item.id === activityId;
-
-    });
-
-    if(!activity){
-        return;
-    }
-
-    const planItem = {
-        activityId: activity.id,
-        title: activity.title,
-        day: activity.day,
-        time: activity.time,
-
-    };
-
-    if (addToMyWeek(planItem)) {
-        updateMyWeek();
-        planMessage.textContent =
-                    activity.title + " was added to your week!";
-
-    }else {
-        planMessage.textContent =
-        "The activity could not be saved. PLease try again.";
-    }
-});
-
-
-planForm.addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    const planDetails = {
-        activityId: String(selectedActivity.value),
-        day: planDay.value,
-        time: planTime.value
-    };
-
-    const errors = validatePlan (planDetails);
-
-    const activity = activities.find(function (item){
-        return item.id === Number(selectedActivity.value);
-    });
+    const index= Number(button.dataset.editIndex);
+    const activities = getMyWeek();
+    const activity = activities[index];
 
     if (!activity) {
-        errors.activityId = "Please choose an activity.";
-
-    }
-
-
-    if (Object.keys(errors).length > 0) {
-        planMessage.textContent = Object.values(errors).join("");
         return;
     }
 
-    const planItem= {
-        activityId: activity.id,
-        title:activity.title,
-        day:planDay.value,
-        time: planTime.value,
-    };
 
-    if(addToMyWeek(planItem)) {
-        updateMyWeek();
-        planMessage.textContent=
-                                activity.tile + "was added to your week.";
+document.getElementById("editing-id").value = index;
+document.getElementById("selected-activity").value = activity.activityId;
+document.getElementById("plan-day").value=activity.day;
+document.getElementById("plan-time").value = activity.time;
+document.getElementById("plan-duration").value = activity.duration;
+document.getElementById("plan-tag").value = activity.category;
 
-                                planDay.planForm.reset();
-                                 
-                                     
-    }else {
-        planMessage.textContent = 
-        "The activity could not be saved .PLease try again.";
+document.getElementById("save-plan-button").textContent = "Save Changes";
+document.getElementById("cancel-edit").hidden = false;
 
+document.getElementById("plan-message").textContent =
+          "Editing " + activity.title + ". Update the details and  save.";
+
+ document.getElementById("my-week").scrollIntoView({
+        behavior: "smooth"
+    });
+});
+
+document.getElementById("cancel-edit").addEventListener("click", function () {
+    document.getElementById("plan-form").reset();
+    document.getElementById("editing-id").value = "";
+    document.getElementById("save-plan-button").textContent = "Add to my week";
+    this.hidden = true;
+
+    document.getElementById("plan-message").textContent =
+        "Editing Cancelled.";
+});
+
+document.getElementById("activity-list").addEventListener("click", function (event) {
+    const button = event.target.closest("button[data-activity-id]");
+
+    if (!button) {
+        return;
     }
 
+    const activityId = button.dataset.activityId;
 
+    document.getElementById("selected-activity").value = activityId;
+
+    document.getElementById("my-week").scrollIntoView({
+        behavior: "smooth"
+    });
+
+    document.getElementById("plan-day").focus();
+
+    document.getElementById("plan-message").textContent =
+        "Activity selected. Choose your day, time, duration, and category.";
 
 });
 
-document.getElementById("weekly-schedule").addEventListener(
-    "click",
-    function (event) {
-        if(event.target.tagName !== "BUTTON") {
-            return;
-        }
+document.getElementById("activity-search").addEventListener("input", function () {
+    const searchText = this.value;
+    const category = document.getElementById("category-filter").value;
 
-        const planIndex = Number(event.target.dataset.planIndex);
+    const filteredActivities = searchActivities(
+        allActivities,
+        searchText,
+        category
+    );
 
-        if(removeFromMyWeek(planIndex)) {
-            updateMyWeek();
-            planMessage.textContent = "Activity removed form your week.";
+    showActivities(filteredActivities);
 
-        }else {
-            planMessage.textContent =
-            "The activity could not be removed.Please try again.";
-        }
+});
+
+document.getElementById("category-filter").addEventListener("change", function () {
+    const searchText = document.getElementById("activity-search").value;
+
+    const filteredActivities  = searchActivities(
+        allActivities,
+        searchText,
+        this.value
+    );
+
+    showActivities(filteredActivities);
+
+});
+
+document.getElementById("plan-form").addEventListener("submit", function (event) {
+ event.preventDefault();
+
+
+ const activityId = Number(document.getElementById("selected-activity").value);
+ const activity = allActivities.find(function (item) {
+    return item.id === activityId;
+ });
+
+  const plan = {
+    activityId: activityId,
+    title: activity ? activity.title : "",
+    category: document.getElementById("plan-tag").value,
+    day: document.getElementById("plan-day").value,
+    time: document.getElementById("plan-time").value,
+    duration: Number(document.getElementById("plan-duration").value)
+
+};
+
+   const errors = validatePlan(plan);
+
+   if (!activity || Object.keys(errors).length >0 || 
+       !checkDay(plan.day) ||
+       !checkTime(plan.time)||
+       !checkDuration(plan.duration)) {
+        document.getElementById("plan-message").textContent =
+        "Please choose an activity and enter a valaid day,time and duration." ;
+        return;
+       }
+
+       const editingId = document.getElementById("editing-id").value;
+
+       let success;
+
+       if (editingId !== "") {
+        const index = Number(editingId);
+        success = updateMyWeek(index, plan);
+
+       } else {
+        success = addToMyWeek(plan);
+       }
+
+       document.getElementById("plan-message").textContent = success
+
+    ? "Your weekly plan has been saved."
+    : "Could not save your plan. Please try again.";
+
+    if(success) {
+        this.reset();
+        document.getElementById("editing-id").value =  "";
+        document.getElementById("save-plan-button").textContent = "Add to my week";
+        document.getElementById("cancel-edit").hidden = true;
+        refreshWeek();
     }
-);
-startPlanner();
+});
 
+document.getElementById("weekly-schedule").addEventListener("click", function(event) {
+    const button = event.target.closest("button[data-plan-index]");
+
+    if(!button) {
+        return;
+    }
+
+    const index  = Number(button.dataset.planIndex); 
+
+        if (removeFromMyWeek(index)) {
+            refreshWeek();
+            document.getElementById("plan-message"). textContent = 
+             "Activity removed from your week.";
+             
+        }   
+             });
+
+    document.getElementById("export-json").addEventListener("click", function (){
+        const plan = getMyWeek();
+
+        const jsonData = JSON.stringify(plan, null, 2);
+
+        const blob = new Blob([jsonData],{
+            type: "application/json"
+        });
+
+        const url = URL.createObjectURL(blob);
+
+
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "my-week-plan.json";
+
+
+        link.click();
+
+        URL.revokeObjectURL(url);
+
+        document.getElementById("data-message").textContent =
+          "Your weekly plan has been exported.";
+    });
+
+    loadActivities();

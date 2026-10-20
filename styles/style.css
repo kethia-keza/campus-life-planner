@@ -5,13 +5,36 @@
 body{
     margin:0;
     font-family: Arial, Helvetica, sans-serif;
-    background: color #fffdf5;
+    background-color: #fffdf5;
     color: #333333;
-    line-height: 1.6,
+    line-height: 1.6;
 
 }
 
+.skip-link {
+    position: absolute;
+    left: 10px;
+    top: 0;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+}
 
+.skip-link:focus {
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    background-color: #244b63;
+    color: #ffffff;
+    padding: 10px 16px;
+    border-radius: 0 0 8px 8px;
+    text-decoration: none;
+    font-weight: bold;
+    z-index: 200;
+}
 header {
     background-color: #f9e7a0;
     padding: 20px;
@@ -25,7 +48,7 @@ header h1 {
 
 nav a {
     color:#333333;
-    text-decoration:#8ecae6;  margin:0 10px;
+    text-decoration: none; margin:0 10px;
 }
 
 nav a:hover {
@@ -56,7 +79,7 @@ section {
     color:#333333;
     padding: 10px 20px;
     border-radius:6px;
-    text-decoration :none;
+    text-decoration : none;
     margin-top: 10px;
 
 }
@@ -93,17 +116,33 @@ select:focus {
 .activity-card h3 {
     margin-top: 0;
 }
- .activity-card button {
+.activity-card {
+    background-color: #fff4c7;
+    border: 1px solid #f2d675;
+    border-left: 5px solid #8ecae6;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+}
+.activity-card button {
     background-color: #d9efff;
     color: #244b63;
     border: none;
     padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
- }
+    margin-top:auto;
+    align-self: flex-start;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+ 
 
  .activity-card button:hover {
     background-color: #b9e2fa;
+    transform: translateY(-2px);
+    box-shadow:0 4px 8px rgba(0, 0, 0, 0.15);
  }
 
  #plan-form {
@@ -157,6 +196,11 @@ select:focus {
     border-radius: 5px;
  }
 
+ .schedule-item button {
+    margin-right: 10px;
+    margin-bottom: 5px;
+ }
+
  #activity-message,
  #plan-message {
     color:#397da8;
@@ -181,10 +225,22 @@ select:focus {
      padding: 15px;
  }
 
+ button:focus-visible {
+    outline: 3px solid #397da8;
+    outline-offset: 2px;
+ }
+
  @media (max-width: 600px) {
     nav a{
-        display: inline-block;
-        margin: 5px;
+        padding: 6px 12px;
+    }
+
+    header h1 {
+        font-size: 26px;
+    }
+
+    #home{
+        padding: 50px 15px 40px;
     }
 
     #home h2 {

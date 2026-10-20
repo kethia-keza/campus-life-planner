@@ -26,10 +26,10 @@ export function checkTime(time) {
     return timePattern.test(time);
 }
 
-export function validPlan(plan) {
+export function validatePlan(plan) {
     const errors = {};
 
-    if (!checkTitle(plan.activityId)) {
+    if (!plan.activityId) {
         errors.activityId= "Please choose an activity.";
     }
 
@@ -41,6 +41,11 @@ export function validPlan(plan) {
     if(!checkTime(plan.time)) {
         errors.time = "Please enter a valid time.";
 
+    }
+
+    if (!checkDuration(plan.duration)) {
+        errors.duration = "Please enter a valid duration.";
+        
     }
 
     return errors;

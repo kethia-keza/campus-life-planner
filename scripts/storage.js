@@ -1,4 +1,4 @@
-const STORAGE_KEY= "your plannerWeek";
+const STORAGE_KEY= "yourPlannerWeek";
 
 export function savePlan(plan) {
     try{
